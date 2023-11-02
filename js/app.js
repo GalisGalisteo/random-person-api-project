@@ -9,9 +9,13 @@ const fetchPokemon = async (url) => {
     return data;
 }
 
-
-document.querySelector('#btn').addEventListener('click', async () => {
-    const person = await fetchPokemon(url);
+const fetchDataAndRender = async () => {
+    let person;
+    try {
+        person = await fetchPokemon(url);
+    } catch (error) {
+        console.error(error)
+    }
     const firstName = person.results[0].name.first;
     const lastName = person.results[0].name.last;
     const country = person.results[0].location.country;
@@ -25,4 +29,7 @@ document.querySelector('#btn').addEventListener('click', async () => {
     document.querySelector('#phone').textContent = phone;
     document.querySelector('#email').textContent = email;
     document.querySelector('#photo').src = picture;
-})
+}
+window.addEventListener('load', fetchDataAndRender);
+
+setInterval(fetchDataAndRender, 5000);
