@@ -1,6 +1,6 @@
 const url = 'https://randomuser.me/api/';
 
-const fetchPokemon = async (url) => {
+const fetchPerson = async (url) => {
     const response = await fetch(url);
     if (!response.ok) {
         throw new Error('Error fetching the pokemon');
@@ -9,17 +9,21 @@ const fetchPokemon = async (url) => {
     return data;
 }
 
+let firstName;
+let lastName;
+let phone;
+
 const fetchDataAndRender = async () => {
     let person;
     try {
-        person = await fetchPokemon(url);
+        person = await fetchPerson(url);
     } catch (error) {
         console.error(error)
     }
-    const firstName = person.results[0].name.first;
-    const lastName = person.results[0].name.last;
+    firstName = person.results[0].name.first;
+    lastName = person.results[0].name.last;
     const country = person.results[0].location.country;
-    const phone = person.results[0].cell;
+    phone = person.results[0].cell;
     const email = person.results[0].email;
     const picture = person.results[0].picture.large;
 
@@ -33,3 +37,14 @@ const fetchDataAndRender = async () => {
 window.addEventListener('load', fetchDataAndRender);
 
 setInterval(fetchDataAndRender, 5000);
+
+document.querySelector('#btnInterview').addEventListener('click', () => {
+    const row = document.createElement('tr');
+    row.innerHTML =
+    `
+    <td>${firstName} ${lastName}</td>
+    <td>${phone}</td> 
+    `
+    document.querySelector('tbody').appendChild(row);
+    document.querySelector('.table').style.display = 'table';
+})
