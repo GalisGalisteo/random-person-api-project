@@ -34,11 +34,8 @@ const fetchDataAndRender = async () => {
     document.querySelector('#email').textContent = email;
     document.querySelector('#photo').src = picture;
 }
-window.addEventListener('load', fetchDataAndRender);
 
-setInterval(fetchDataAndRender, 5000);
-
-document.querySelector('#btnInterview').addEventListener('click', () => {
+const addNewContact = (firstName, lastName, phone) => {
     const row = document.createElement('tr');
     row.innerHTML =
     `
@@ -47,4 +44,12 @@ document.querySelector('#btnInterview').addEventListener('click', () => {
     `
     document.querySelector('tbody').appendChild(row);
     document.querySelector('.table').style.display = 'table';
+}
+
+window.addEventListener('load', fetchDataAndRender);
+
+setInterval(fetchDataAndRender, 5000);
+
+document.querySelector('#btnInterview').addEventListener('click', () => {
+    addNewContact (firstName, lastName, phone) 
 })
